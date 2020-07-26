@@ -5,26 +5,35 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.example.daggersamples.car.Car;
-import com.example.daggersamples.modules.DieselEngineModule;
+import com.example.daggersamples.di.component.ActivityComponent;
+import com.example.daggersamples.di.component.DaggerActivityComponent;
 
 import javax.inject.Inject;
 
 public class MainActivity extends AppCompatActivity {
 
     @Inject
-    Car car;
+    Car car1;
+
+    @Inject
+    Car car2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        CarComponent component = DaggerCarComponent.builder().horsePower(1000).engineCapacity(100).build();
+        ActivityComponent activityComponent = DaggerActivityComponent.builder().appComponent(
+                ((ExampleApp) getApplication()).getAppComponent()
+        ).engineCapacity(200)
+                .horsePower(300).build();
 
-//        CarComponent component = DaggerCarComponent.builder().dieselEngineModule(new DieselEngineModule(1000)).build();
-        component.inject(this);
+
+//        ActivityComponent activityComponent = ((ExampleApp) getApplication()).getActivityComponent();
+        activityComponent.inject(this);
 //
-        car.drive();
+        car1.drive();
+        car2.drive();
 
     }
 }
