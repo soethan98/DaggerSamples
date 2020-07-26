@@ -26,9 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         ActivityComponent activityComponent = ((ExampleApp) getApplication()).getAppComponent()
-                .getActivityComponentBuilder().engineCapacity(100)
-                .horsePower(1200).build();
-
+                .getActivityComponentFactory().create(1000, 100);
 
 //        ActivityComponent activityComponent = ((ExampleApp) getApplication()).getActivityComponent();
         activityComponent.inject(this);
